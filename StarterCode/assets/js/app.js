@@ -44,9 +44,16 @@
 //       .attr("cy", function (d) { return y(d.SalePrice); } )
 //       .attr("r", 1.5)
 //       .style("fill", "#69b3a2")
-
+//according to LA team this won't work review activies
+//too mauch debugging will have to happen with this tutorial
 
 //grab activity Par Hair Metal Conclusion (activity:12, day:3)
+//this activity is similar to this assignment
+//remember that your X axis is poverty and Y axis is lack of health care
+//when going through this make sure that you pay attention to how things change 
+
+//still having a issue with seeing graph 
+
 
 
 var svgWidth = 960;
