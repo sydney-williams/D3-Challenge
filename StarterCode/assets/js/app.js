@@ -9,13 +9,14 @@ var margin = {top:10, right:30, bottom:30, left:60},
     height = 400 - margin.top - margin.bottom;
 // append the svg object to the body of the page
 var svg = d3.select("data_visuals")
-    .append("svg")
-    .attr("svg")
-    .attr("width",width + margin.left + margin.right)
+    // .append("svg")
+    // .attr("svg")
+    // .attr("width",width + margin.left + margin.right)
+    .select("scatter")
     .append("g")
     .attr("transform", "translate(" + margin.left + "" + margin.top + ")");
 // read in your data
-d3.csv("assets/data/data.csv"), funtion(data) {
+d3.csv("assets/data/data.csv"), function(data) {
 
 // add X axis
 //remember that x axis will be poverty 
@@ -46,5 +47,5 @@ svg.append("g")
      .attr("r", 1.5)
      .style("fill", "#69b3a2")
 
-})
+}
 
