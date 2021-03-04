@@ -1,7 +1,53 @@
 // @TODO: YOUR CODE HERE!
 // d3.csv()
 //look up d3 tutorial scatter plot tutorials 
+// set the dimensions and margins of the graph
+
+// var margin = {top: 10, right: 30, bottom: 30, left: 60},
+//     width = 460 - margin.left - margin.right,
+//     height = 400 - margin.top - margin.bottom;
+
+// // append the svg object to the body of the page
+// var svg = d3.select("#my_dataviz")
+//   .append("svg")
+//     .attr("width", width + margin.left + margin.right)
+//     .attr("height", height + margin.top + margin.bottom)
+//   .append("g")
+//     .attr("transform",
+//           "translate(" + margin.left + "," + margin.top + ")");
+
+// //Read the data
+// d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/2_TwoNum.csv", function(data) {
+
+//   // Add X axis
+//   var x = d3.scaleLinear()
+//     .domain([0, 4000])
+//     .range([ 0, width ]);
+//   svg.append("g")
+//     .attr("transform", "translate(0," + height + ")")
+//     .call(d3.axisBottom(x));
+
+//   // Add Y axis
+//   var y = d3.scaleLinear()
+//     .domain([0, 500000])
+//     .range([ height, 0]);
+//   svg.append("g")
+//     .call(d3.axisLeft(y));
+
+//   // Add dots
+//   svg.append('g')
+//     .selectAll("dot")
+//     .data(data)
+//     .enter()
+//     .append("circle")
+//       .attr("cx", function (d) { return x(d.GrLivArea); } )
+//       .attr("cy", function (d) { return y(d.SalePrice); } )
+//       .attr("r", 1.5)
+//       .style("fill", "#69b3a2")
+
+
 //grab activity Par Hair Metal Conclusion (activity:12, day:3)
+
 
 var svgWidth = 960;
 var svgHeight = 500;
@@ -29,20 +75,21 @@ var chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 // Initial Params
-var chosenXAxis = "hair_length";
+var chosenXAxis = "state";
 
 // function used for updating x-scale var upon click on axis label
-function xScale(hairData, chosenXAxis) {
+function xScale(healthcareData, chosenXAxis) {
   // create scales
   var xLinearScale = d3.scaleLinear()
-    .domain([d3.min(hairData, d => d[chosenXAxis]) * 0.8,
-      d3.max(hairData, d => d[chosenXAxis]) * 1.2
+    .domain([d3.min(healthcareData, d => d[chosenXAxis]) * 0.8,
+      d3.max(healthcareData, d => d[chosenXAxis]) * 1.2
     ])
     .range([0, width]);
 
   return xLinearScale;
 
 }
+
 
 // function used for updating xAxis var upon click on axis label
 function renderAxes(newXScale, xAxis) {
@@ -67,15 +114,16 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
 }
 
 // function used for updating circles group with new tooltip
+//remember your X axis is poverty
 function updateToolTip(chosenXAxis, circlesGroup) {
 
   var label;
 
-  if (chosenXAxis === "hair_length") {
-    label = "Hair Length:";
+  if (chosenXAxis === "income") {
+    label = ":";
   }
   else {
-    label = "# of Albums:";
+    label = "In Poverty:";
   }
 
   var toolTip = d3.tip()
@@ -99,22 +147,22 @@ function updateToolTip(chosenXAxis, circlesGroup) {
 }
 
 // Retrieve data from the CSV file and execute everything below
-d3.csv("hairData.csv").then(function(hairData, err) {
+d3.csv("data.csv").then(function(healthcareData, err) {
   if (err) throw err;
 
   // parse data
-  hairData.forEach(function(data) {
+  healthcareData.forEach(function(data) {
     data.hair_length = +data.hair_length;
     data.num_hits = +data.num_hits;
     data.num_albums = +data.num_albums;
   });
 
   // xLinearScale function above csv import
-  var xLinearScale = xScale(hairData, chosenXAxis);
+  var xLinearScale = xScale(healthcareData, chosenXAxis);
 
   // Create y scale function
   var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(hairData, d => d.num_hits)])
+    .domain([0, d3.max(healthcareData, d => d.healthcare)])
     .range([height, 0]);
 
   // Create initial axis functions
@@ -133,7 +181,7 @@ d3.csv("hairData.csv").then(function(hairData, err) {
 
   // append initial circles
   var circlesGroup = chartGroup.selectAll("circle")
-    .data(hairData)
+    .data(healthcareData)
     .enter()
     .append("circle")
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
