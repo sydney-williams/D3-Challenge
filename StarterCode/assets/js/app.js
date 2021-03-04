@@ -154,7 +154,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
 }
 
 // Retrieve data from the CSV file and execute everything below
-d3.csv("data.csv").then(function(healthcareData, err) {
+d3.csv("assets/data/data.csv").then(function(healthcareData, err) {
   if (err) throw err;
 
   // parse data
@@ -206,14 +206,14 @@ d3.csv("data.csv").then(function(healthcareData, err) {
     .attr("y", 20)
     .attr("value", "hair_length") // value to grab for event listener
     .classed("active", true)
-    .text("Hair Metal Ban Hair Length (inches)");
+    .text("In Poverty (%)");
 
   var albumsLabel = labelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 40)
     .attr("value", "num_albums") // value to grab for event listener
     .classed("inactive", true)
-    .text("# of Albums Released");
+    .text("# of Americans without Healthcare ");
 
   // append y axis
   chartGroup.append("text")
@@ -222,7 +222,7 @@ d3.csv("data.csv").then(function(healthcareData, err) {
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
     .classed("axis-text", true)
-    .text("Number of Billboard 500 Hits");
+    .text("Lacks Healthcare (%)");
 
   // updateToolTip function above csv import
   var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
@@ -241,7 +241,7 @@ d3.csv("data.csv").then(function(healthcareData, err) {
 
         // functions here found above csv import
         // updates x scale for new data
-        xLinearScale = xScale(hairData, chosenXAxis);
+        xLinearScale = xScale(healthcareData, chosenXAxis);
 
         // updates x axis with transition
         xAxis = renderAxes(xLinearScale, xAxis);
